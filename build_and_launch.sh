@@ -1,0 +1,1 @@
+g++ -g detection_pipeline.cpp -o detection_pipeline -lrealsense2 -lopencv_core -lopencv_highgui -lopencv_imgproc -lrealsense2 && ./detection_pipeline
