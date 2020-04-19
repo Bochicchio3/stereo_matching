@@ -1,1 +1,3 @@
-# Repository for Stereo matching experiments
+# Stereo matching for Challenging Obstacle Detection
+
+
