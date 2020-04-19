@@ -8,6 +8,8 @@ Provides
   2. Compute U_disparity
   3. Draw objects
   4. Create test Disparity
+  5. Hough_line algorithm
+  6. Evaluate disparity
 
 Implementation
 ----------------------------
@@ -132,14 +134,6 @@ def create_test_disparity(IMAGE_HEIGHT = 600, IMAGE_WIDTH = 800, max_disp=200):
     return image
 
 
-'''
-This example illustrates how to use Hough Transform to find lines
-
-Usage:
-    houghlines.py [<image_name>]
-    image argument defaults to pic1.png
-'''
-
 
 
 def hough_lines(img, probabilistic=True):
@@ -183,3 +177,29 @@ def hough_lines(img, probabilistic=True):
 
 
 
+def eval_disparity(disparity, gt, max_disp = 64, treshold = 3):
+    """
+    Computes the recall of the disparity map.
+    
+    Parameters
+    ----------
+    disparity: disparity image.
+    gt: path to ground-truth image.
+    >>> left 'images/img_left.png'
+    max_disp: maximum disparity for the stereo pair
+    treshold: 
+
+    Returns
+    -------
+    rate of correct predictions where correct is difference between gt and disparity < treshold parameter
+    """
+    
+    gt = np.float32(cv2.imread(gt, cv2.IMREAD_GRAYSCALE))
+    
+    gt = np.int16(gt / 255.0 * float(max_disp))
+    
+    disparity = np.int16(np.float32(disparity) / 255.0 * float(max_disp))
+    
+    correct = np.count_nonzero(np.abs(disparity - gt) <= treshold)
+    
+    return float(correct) / gt.size
