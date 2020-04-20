@@ -151,7 +151,6 @@ def hough_lines(img, probabilistic=True):
 
     """
     dst = cv2.Canny(img, 50, 200)
-    
     cdst = cv2.cvtColor(dst, cv2.COLOR_GRAY2BGR)
 
     if probabilistic: # HoughLinesP
