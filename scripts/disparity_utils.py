@@ -202,3 +202,17 @@ def eval_disparity(disparity, gt, max_disp = 64, treshold = 3):
     correct = np.count_nonzero(np.abs(disparity - gt) <= treshold)
     
     return float(correct) / gt.size
+
+
+
+def treshold_u_disp(u_disparity, a = 10, b = 5):
+    # binarized = np.zeros(u_disparity.shape)
+    for column_idx in range (0,u_disparity.shape[1]):
+        treshold = 10*abs(u_disparity.shape[1]/2-column_idx)/(u_disparity.shape[1]/2)+b
+        u_disparity[treshold:255,column_idx]=0
+        u_disparity[treshold]=155
+        
+    return u_disparity
+        
+        
+
