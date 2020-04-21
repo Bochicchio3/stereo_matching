@@ -134,8 +134,6 @@ def create_test_disparity(IMAGE_HEIGHT = 600, IMAGE_WIDTH = 800, max_disp=200):
     return image
 
 
-
-
 def hough_lines(img, probabilistic=True):
     """
     Find hough lines in the image. 
@@ -148,6 +146,7 @@ def hough_lines(img, probabilistic=True):
     Returns
     -------
     cdst: output an images with the lines.
+    lines: list of lines found with the hough algorithm
 
     """
     dst = cv2.Canny(img, 50, 200)
@@ -172,8 +171,7 @@ def hough_lines(img, probabilistic=True):
                 pt1 = ( int(x0+1000*(-b)), int(y0+1000*(a)) )
                 pt2 = ( int(x0-1000*(-b)), int(y0-1000*(a)) )
                 cv2.line(cdst, pt1, pt2, (0, 0, 255), 3, cv2.LINE_AA)
-    return cdst
-
+    return cdst, lines
 
 
 def eval_disparity(disparity, gt, max_disp = 64, treshold = 3):
@@ -202,7 +200,6 @@ def eval_disparity(disparity, gt, max_disp = 64, treshold = 3):
     correct = np.count_nonzero(np.abs(disparity - gt) <= treshold)
     
     return float(correct) / gt.size
-
 
 
 def treshold_u_disp(u_disparity, a = 10, b = 5):
